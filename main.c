@@ -7,7 +7,7 @@ int main()
 {
     int choice;
     printf("entered main\n");
-    printf("Enter choices To\n1. Test testNumberToPair()\n2. Test testPairToNumber()\n3. Print Reference manual\n");
+    printf("Enter choices To\n1. Test testNumberToPair()\n2. Test testPairToNumber()\n3. Print Reference manual\n"); 
     scanf("%d",&choice);
     
     switch(choice)
