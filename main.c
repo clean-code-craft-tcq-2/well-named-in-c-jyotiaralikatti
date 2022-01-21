@@ -1,78 +1,51 @@
 #include <stdio.h>
-#include <assert.h>
+#include "TestFunctionality.h"
+#include "VariableTypes.h"
+#include "ColorCode.h"
 
-enum MajorColor {WHITE, RED, BLACK, YELLOW, VIOLET};
-enum MinorColor {BLUE, ORANGE, GREEN, BROWN, SLATE};
-
-const char* MajorColorNames[] = {
-    "White", "Red", "Black", "Yellow", "Violet"
-};
-int numberOfMajorColors =
-    sizeof(MajorColorNames) / sizeof(MajorColorNames[0]);
-const char* MinorColorNames[] = {
-    "Blue", "Orange", "Green", "Brown", "Slate"
-};
-const int MAX_COLORPAIR_NAME_CHARS = 16;
-int numberOfMinorColors =
-    sizeof(MinorColorNames) / sizeof(MinorColorNames[0]);
-
-typedef struct {
-    enum MajorColor majorColor;
-    enum MinorColor minorColor;
-} ColorPair;
-
-void ColorPairToString(const ColorPair* colorPair, char* buffer) {
-    sprintf(buffer, "%s %s",
-        MajorColorNames[colorPair->majorColor],
-        MinorColorNames[colorPair->minorColor]);
-}
-
-ColorPair GetColorFromPairNumber(int pairNumber) {
-    ColorPair colorPair;
-    int zeroBasedPairNumber = pairNumber - 1;
-    colorPair.majorColor = 
-        (enum MajorColor)(zeroBasedPairNumber / numberOfMinorColors);
-    colorPair.minorColor =
-        (enum MinorColor)(zeroBasedPairNumber % numberOfMinorColors);
-    return colorPair;
-}
-
-int GetPairNumberFromColor(const ColorPair* colorPair) {
-    return colorPair->majorColor * numberOfMinorColors +
-            colorPair->minorColor + 1;
-}
-
-void testNumberToPair(int pairNumber,
-    enum MajorColor expectedMajor,
-    enum MinorColor expectedMinor)
+int main()
 {
-    ColorPair colorPair = GetColorFromPairNumber(pairNumber);
-    char colorPairNames[MAX_COLORPAIR_NAME_CHARS];
-    ColorPairToString(&colorPair, colorPairNames);
-    printf("Got pair %s\n", colorPairNames);
-    assert(colorPair.majorColor == expectedMajor);
-    assert(colorPair.minorColor == expectedMinor);
-}
-
-void testPairToNumber(
-    enum MajorColor major,
-    enum MinorColor minor,
-    int expectedPairNumber)
-{
-    ColorPair colorPair;
-    colorPair.majorColor = major;
-    colorPair.minorColor = minor;
-    int pairNumber = GetPairNumberFromColor(&colorPair);
-    printf("Got pair number %d\n", pairNumber);
-    assert(pairNumber == expectedPairNumber);
-}
-
-int main() {
+    int choice;
+    printf("entered main\n");
+    printf("Enter choices To\n1. Test testNumberToPair()\n2. Test testPairToNumber()\n3. Print Reference manual\n"); 
+    scanf("%d",&choice);
+    
+    switch(choice)
+    {
+    case 1:
     testNumberToPair(4, WHITE, BROWN);
-    testNumberToPair(5, WHITE, SLATE);
-
+    testNumberToPair(5, WHITE, SLATE); break;
+    
+    case 2:
+    printf("entered PairToNumber\n");
     testPairToNumber(BLACK, ORANGE, 12);
-    testPairToNumber(VIOLET, SLATE, 25);
-
+    testPairToNumber(VIOLET, SLATE, 25);break;
+    
+    case 3:
+    Print_reference_manual();break;
+    
+    default: printf("Invalid input\n");break;
+    }
     return 0;
 }
+void Print_reference_manual()
+{
+	int PairNumber, expectedpairNumber;
+
+	printf ("\n*********%d-Pair Colour codes**********\n", MAX_PAIR_NUMBER);
+	printf ("____________________________\n");
+	printf ("Pair_Num\tColour-Pair\n");
+	printf ("____________________________\n");
+	
+	for (PairNumber = 1; PairNumber <= MAX_PAIR_NUMBER; PairNumber++)
+	{
+    Get_ColorCodePair_AsString(PairNumber,&expectedpairNumber);
+		if (expectedpairNumber == PairNumber){
+			printf ("%-8d\t%s\n", PairNumber, colorPairNames);
+			printf("-----------------------------\n");
+		}
+	}
+}
+
+
+
